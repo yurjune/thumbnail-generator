@@ -123,6 +123,10 @@ input[type="text"] {
   font-size: 15px;
 }
 
+input[type="text"]::placeholder {
+  color: #9ca3af;
+}
+
 button {
   border: none;
   border-radius: 10px;
