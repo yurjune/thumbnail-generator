@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thumbnail Generator</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="app">
+      <h1 class="app-title">썸네일 생성기</h1>
+
+      <section class="preview-panel">
+        <div class="canvas-wrap">
+          <canvas
+            id="thumbnailCanvas"
+            width="1024"
+            height="1024"
+            aria-label="썸네일 미리보기"
+          ></canvas>
+        </div>
+      </section>
+
+      <section class="controls-panel">
+        <div class="control">
+          <label>배경 프리셋</label>
+          <div id="presetList" class="preset-list"></div>
+        </div>
+
+        <div class="control">
+          <label for="titleInput">상단 텍스트</label>
+          <input
+            id="titleInput"
+            type="text"
+            value="우상을 피하고 하나님만 섬기기"
+          />
+        </div>
+
+        <div class="control">
+          <label for="verseInput">하단 텍스트</label>
+          <input id="verseInput" type="text" value="살전 16:9-20" />
+        </div>
+
+        <button id="saveBtn" type="button">저장하기</button>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>

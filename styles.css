@@ -1,0 +1,140 @@
+* {
+  box-sizing: border-box;
+}
+
+:root {
+  --bg: #f5f7fa;
+  --panel: #ffffff;
+  --line: #dde5ee;
+  --text: #111827;
+  --primary: #2563eb;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--text);
+  font-family:
+    ui-rounded, "SF Pro Rounded", "Apple SD Gothic Neo", "Malgun Gothic",
+    sans-serif;
+}
+
+.app {
+  max-width: 420px;
+  margin: 0 auto;
+  padding: 16px;
+}
+
+h1 {
+  margin: 0 0 12px;
+  font-size: 26px;
+  line-height: 1.2;
+}
+
+.app-title {
+  text-align: center;
+}
+
+.preview-panel,
+.controls-panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+
+.preview-panel {
+  padding: 12px;
+}
+
+.canvas-wrap {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: #0f172a;
+}
+
+#thumbnailCanvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.controls-panel {
+  margin-top: 12px;
+  padding: 12px;
+  display: grid;
+  gap: 14px;
+}
+
+.control {
+  display: grid;
+  gap: 8px;
+}
+
+label {
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.preset-list {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.preset-item {
+  border: 2px solid transparent;
+  border-radius: 10px;
+  background: #edf2f7;
+  padding: 4px;
+  cursor: pointer;
+  transition: border-color 0.15s ease;
+}
+
+.preset-item:active {
+  transform: scale(0.99);
+}
+
+.preset-item.active {
+  border-color: var(--primary);
+}
+
+.preset-item img {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: 6px;
+  object-fit: cover;
+  display: block;
+}
+
+input[type="text"] {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 12px;
+  font: inherit;
+  background: #fff;
+  color: var(--text);
+  min-height: 48px;
+  line-height: 1.5;
+  font-size: 15px;
+}
+
+button {
+  border: none;
+  border-radius: 10px;
+  background: var(--primary);
+  color: #fff;
+  font-size: 17px;
+  font-weight: 700;
+  padding: 14px;
+  cursor: pointer;
+  line-height: 1.2;
+}
+
+button:active {
+  transform: translateY(1px);
+}
