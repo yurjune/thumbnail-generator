@@ -10,16 +10,15 @@ const presetList = document.getElementById("presetList");
 const THUMBNAIL_SIZE = 1024;
 const EXPORT_SIZE = 1024;
 const EXPORT_TYPE = "image/webp";
-const EXPORT_QUALITY = 1;
 const PRESETS = [
-  "presets/thumbnail1.webp",
-  "presets/thumbnail2.webp",
-  "presets/thumbnail3.webp",
-  "presets/thumbnail4.webp",
-  "presets/thumbnail5.webp",
-  "presets/thumbnail6.webp",
-  "presets/thumbnail7.webp",
-  "presets/thumbnail8.webp",
+  { name: "presets/thumbnail1.webp", quality: 0.99 },
+  { name: "presets/thumbnail2.webp", quality: 0.85 },
+  { name: "presets/thumbnail3.webp", quality: 0.95 },
+  { name: "presets/thumbnail4.webp", quality: 0.95 },
+  { name: "presets/thumbnail5.webp", quality: 0.95 },
+  { name: "presets/thumbnail6.webp", quality: 0.95 },
+  { name: "presets/thumbnail7.webp", quality: 0.98 },
+  { name: "presets/thumbnail8.webp", quality: 0.98 },
 ];
 
 const MIDDLE_GAP = 96;
@@ -167,7 +166,7 @@ function render() {
       drawBlock(block, (THUMBNAIL_SIZE - block.height) / 2);
     }
   };
-  image.src = PRESETS[state.presetIndex];
+  image.src = PRESETS[state.presetIndex].name;
 }
 
 function syncInputs() {
@@ -198,11 +197,15 @@ async function createExportBlob() {
 
   const exportCtx = exportCanvas.getContext("2d");
   exportCtx.drawImage(canvas, 0, 0, EXPORT_SIZE, EXPORT_SIZE);
-  return canvasToBlob(exportCanvas, EXPORT_TYPE, EXPORT_QUALITY);
+  return canvasToBlob(
+    exportCanvas,
+    EXPORT_TYPE,
+    PRESETS[state.presetIndex].quality,
+  );
 }
 
 PRESETS.forEach((preset, index) => {
-  presetList.appendChild(createPresetButton(preset, index));
+  presetList.appendChild(createPresetButton(preset.name, index));
 });
 
 inputs.forEach((input) => input.addEventListener("input", syncInputs));
