@@ -10,6 +10,7 @@ const presetList = document.getElementById("presetList");
 const THUMBNAIL_SIZE = 1024;
 const EXPORT_SIZE = 1024;
 const EXPORT_TYPE = "image/webp";
+const MOBILE_VIEWPORT_MAX_WIDTH = 768;
 const PRESETS = [
   { name: "presets/thumbnail1.webp", quality: 0.99 },
   { name: "presets/thumbnail2.webp", quality: 0.85 },
@@ -174,6 +175,46 @@ function syncInputs() {
   render();
 }
 
+function downloadBlob(blob, filename) {
+  const link = document.createElement("a");
+  const objectUrl = URL.createObjectURL(blob);
+  link.download = filename;
+  link.href = objectUrl;
+  link.click();
+  setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
+}
+
+function isMobileViewport() {
+  return window.innerWidth <= MOBILE_VIEWPORT_MAX_WIDTH;
+}
+
+async function shareImageFile(blob, filename) {
+  if (typeof navigator.share !== "function") {
+    return false;
+  }
+
+  const file = new File([blob], filename, { type: EXPORT_TYPE });
+  if (typeof navigator.canShare === "function") {
+    const canShareFile = navigator.canShare({ files: [file] });
+    if (!canShareFile) {
+      return false;
+    }
+  }
+
+  try {
+    await navigator.share({
+      files: [file],
+      title: "썸네일 저장",
+    });
+    return true;
+  } catch (error) {
+    if (error?.name === "AbortError") {
+      return true;
+    }
+    return false;
+  }
+}
+
 function canvasToBlob(targetCanvas, type, quality) {
   return new Promise((resolve, reject) => {
     targetCanvas.toBlob(
@@ -212,12 +253,14 @@ inputs.forEach((input) => input.addEventListener("input", syncInputs));
 
 saveBtn.addEventListener("click", async () => {
   const blob = await createExportBlob();
-  const link = document.createElement("a");
-  const objectUrl = URL.createObjectURL(blob);
-  link.download = "thumbnail.webp";
-  link.href = objectUrl;
-  link.click();
-  setTimeout(() => URL.revokeObjectURL(objectUrl), 1000);
+  const filename = "thumbnail.webp";
+  const shared = isMobileViewport()
+    ? await shareImageFile(blob, filename)
+    : false;
+
+  if (!shared) {
+    downloadBlob(blob, filename);
+  }
 });
 
 render();
